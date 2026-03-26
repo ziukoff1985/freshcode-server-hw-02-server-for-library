@@ -22,7 +22,7 @@ app.put('/books', BooksControllers.updateBook);
 app.delete('/books/:bookId', BooksControllers.deleteBook);
 
 app.get('/authors', AuthorsController.getAllAuthors);
-// app.get('/authors/:authorId', AuthorsController.getAuthorById);
+app.get('/authors/:authorId', AuthorsController.getAuthorById);
 // app.post('/authors', AuthorsController.createAuthor);
 // app.put('/authors', AuthorsController.updateAuthor);
 // app.delete('/authors/:authorId', AuthorsController.deleteAuthor);
