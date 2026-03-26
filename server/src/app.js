@@ -15,6 +15,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/books', BooksControllers.getAllBooks);
+app.get('/books/:bookId', BooksControllers.getBookById);
 
 // app.get('/actors', ActorsController.getAllActors);
 // app.get('/actors/:actorId', ActorsController.getActorById);
