@@ -82,6 +82,27 @@ class AuthorsController {
             res.status(500).send('Internal server error');
         }
     }
+
+    async deleteAuthor(req, res) {
+        try {
+            const { authorId } = req.params;
+            const deletedAuthor = await db.query(
+                `
+                DELETE FROM authors
+                WHERE id=$1
+                RETURNING full_name, id
+                `,
+                [authorId],
+            );
+            if (deletedAuthor.rows.length === 0) {
+                return res.status(404).send('Author not found');
+            }
+            res.status(200).json(deletedAuthor.rows[0]);
+        } catch (error) {
+            console.log(error);
+            res.status(500).send('Internal server error');
+        }
+    }
 }
 
 module.exports = new AuthorsController();

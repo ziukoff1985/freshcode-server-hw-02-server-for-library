@@ -29,4 +29,4 @@ Content-Type: application/json
 
 ###
 
-DELETE http://localhost:5000/authors/22
+DELETE http://localhost:5000/authors/20
