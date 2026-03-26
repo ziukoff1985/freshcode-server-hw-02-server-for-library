@@ -55,6 +55,32 @@ class CustomersController {
             res.status(500).send('Internal server error');
         }
     }
+
+    async updateCustomer(req, res) {
+        try {
+            const { id, full_name, email, phone, password } = req.body;
+            const updatedCustomer = await db.query(
+                `
+                UPDATE customers
+                SET
+                full_name=$2,
+                email=$3,
+                phone=$4,
+                password=$5
+                WHERE id=$1
+                RETURNING *
+                `,
+                [id, full_name, email, phone, password],
+            );
+            if (updatedCustomer.rows.length === 0) {
+                return res.status(404).send('Customer not found');
+            }
+            res.status(200).json(updatedCustomer.rows[0]);
+        } catch (error) {
+            console.log(error);
+            res.status(500).send('Internal server error');
+        }
+    }
 }
 
 module.exports = new CustomersController();
