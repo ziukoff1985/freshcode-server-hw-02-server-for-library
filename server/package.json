@@ -1,0 +1,22 @@
+{
+    "name": "freshcode-server-hw-01-cinema-controllers",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "nodemon ./index.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ziukoff1985/freshcode-server-hw-01-cinema-controllers.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "dotenv": "^17.3.1",
+        "express": "^5.2.1",
+        "pg": "^8.20.0",
+        "pg-hstore": "^2.3.4"
+    }
+}

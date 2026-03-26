@@ -1,0 +1,790 @@
+--
+-- PostgreSQL database dump
+--
+
+\restrict yfcp5f4S50x47b7HY1jE9FqHP3l2fVb7ziWdL9ZVupl8mz7GBvNcdZrW9XZhzan
+
+-- Dumped from database version 18.3 (Ubuntu 18.3-1.pgdg24.04+1)
+-- Dumped by pg_dump version 18.3 (Ubuntu 18.3-1.pgdg24.04+1)
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET transaction_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- Name: actors; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.actors (
+    id integer NOT NULL,
+    full_name character varying(255) NOT NULL,
+    birth_year date,
+    death_year date,
+    photo text,
+    countryid integer
+);
+
+
+ALTER TABLE public.actors OWNER TO postgres;
+
+--
+-- Name: actors_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.actors_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.actors_id_seq OWNER TO postgres;
+
+--
+-- Name: actors_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.actors_id_seq OWNED BY public.actors.id;
+
+
+--
+-- Name: countries; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.countries (
+    id integer NOT NULL,
+    title character varying(10) NOT NULL,
+    description text
+);
+
+
+ALTER TABLE public.countries OWNER TO postgres;
+
+--
+-- Name: countries_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.countries_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.countries_id_seq OWNER TO postgres;
+
+--
+-- Name: countries_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.countries_id_seq OWNED BY public.countries.id;
+
+
+--
+-- Name: directors; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.directors (
+    id integer NOT NULL,
+    full_name character varying(255) NOT NULL,
+    birth_year date,
+    death_year date,
+    photo text,
+    countryid integer
+);
+
+
+ALTER TABLE public.directors OWNER TO postgres;
+
+--
+-- Name: directors_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.directors_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.directors_id_seq OWNER TO postgres;
+
+--
+-- Name: directors_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.directors_id_seq OWNED BY public.directors.id;
+
+
+--
+-- Name: genres; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.genres (
+    id integer NOT NULL,
+    title character varying(255) NOT NULL,
+    description text
+);
+
+
+ALTER TABLE public.genres OWNER TO postgres;
+
+--
+-- Name: genres_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.genres_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.genres_id_seq OWNER TO postgres;
+
+--
+-- Name: genres_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.genres_id_seq OWNED BY public.genres.id;
+
+
+--
+-- Name: locations; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.locations (
+    id integer NOT NULL,
+    countryid integer,
+    city character varying(10) NOT NULL
+);
+
+
+ALTER TABLE public.locations OWNER TO postgres;
+
+--
+-- Name: locations_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.locations_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.locations_id_seq OWNER TO postgres;
+
+--
+-- Name: locations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.locations_id_seq OWNED BY public.locations.id;
+
+
+--
+-- Name: movies; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.movies (
+    id integer NOT NULL,
+    title character varying(255) NOT NULL,
+    year date,
+    poster text,
+    genreid integer,
+    studioid integer
+);
+
+
+ALTER TABLE public.movies OWNER TO postgres;
+
+--
+-- Name: movies_actors; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.movies_actors (
+    actorid integer,
+    movieid integer
+);
+
+
+ALTER TABLE public.movies_actors OWNER TO postgres;
+
+--
+-- Name: movies_directors; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.movies_directors (
+    directorid integer,
+    movieid integer
+);
+
+
+ALTER TABLE public.movies_directors OWNER TO postgres;
+
+--
+-- Name: movies_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.movies_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.movies_id_seq OWNER TO postgres;
+
+--
+-- Name: movies_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.movies_id_seq OWNED BY public.movies.id;
+
+
+--
+-- Name: studios; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.studios (
+    id integer NOT NULL,
+    title character varying(100) NOT NULL,
+    logo text,
+    locationid integer
+);
+
+
+ALTER TABLE public.studios OWNER TO postgres;
+
+--
+-- Name: studios_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.studios_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.studios_id_seq OWNER TO postgres;
+
+--
+-- Name: studios_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.studios_id_seq OWNED BY public.studios.id;
+
+
+--
+-- Name: actors id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.actors ALTER COLUMN id SET DEFAULT nextval('public.actors_id_seq'::regclass);
+
+
+--
+-- Name: countries id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.countries ALTER COLUMN id SET DEFAULT nextval('public.countries_id_seq'::regclass);
+
+
+--
+-- Name: directors id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.directors ALTER COLUMN id SET DEFAULT nextval('public.directors_id_seq'::regclass);
+
+
+--
+-- Name: genres id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.genres ALTER COLUMN id SET DEFAULT nextval('public.genres_id_seq'::regclass);
+
+
+--
+-- Name: locations id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.locations ALTER COLUMN id SET DEFAULT nextval('public.locations_id_seq'::regclass);
+
+
+--
+-- Name: movies id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.movies ALTER COLUMN id SET DEFAULT nextval('public.movies_id_seq'::regclass);
+
+
+--
+-- Name: studios id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.studios ALTER COLUMN id SET DEFAULT nextval('public.studios_id_seq'::regclass);
+
+
+--
+-- Data for Name: actors; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.actors (id, full_name, birth_year, death_year, photo, countryid) FROM stdin;
+1	Leonardo DiCaprio	1974-11-11	\N	leo.jpg	1
+2	Marlon Brando	1924-04-03	2004-07-01	brando.jpg	1
+3	Heath Ledger	1979-04-04	2008-01-22	ledger.jpg	9
+4	Robin Williams	1951-07-21	2014-08-11	williams.jpg	1
+5	Ivan Mykolaichuk	1941-06-15	1987-08-03	ivan.jpg	10
+6	Bohdan Stupka	1941-08-27	2012-07-22	stupka.jpg	10
+7	Jean Reno	1948-07-30	\N	reno.jpg	3
+8	Brad Pitt	1963-12-18	\N	pitt.jpg	1
+9	Tom Hardy	1977-09-15	\N	hardy.jpg	2
+10	Cillian Murphy	1976-05-25	\N	murphy.jpg	2
+11	Margot Robbie	1990-07-02	\N	robbie.jpg	9
+12	Scarlett Johansson	1984-11-22	\N	scarlett.jpg	1
+13	Matthew McConaughey	1969-11-04	\N	matthew.jpg	1
+14	Anne Hathaway	1982-11-12	\N	anne.jpg	1
+15	Christian Bale	1974-01-30	\N	bale.jpg	2
+16	Ryan Gosling	1980-11-12	\N	gosling.jpg	5
+17	Monica Bellucci	1964-09-30	\N	monica.jpg	6
+18	Ken Watanabe	1959-10-21	\N	ken.jpg	7
+19	Hugh Jackman	1968-10-12	\N	hugh.jpg	9
+20	Cate Blanchett	1969-05-14	\N	cate.jpg	9
+\.
+
+
+--
+-- Data for Name: countries; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.countries (id, title, description) FROM stdin;
+1	USA	United States
+2	UK	United Kingdom
+3	FRA	France
+4	GER	Germany
+5	CAN	Canada
+6	ITA	Italy
+7	JPN	Japan
+8	ESP	Spain
+9	AUS	Australia
+10	UKR	Ukraine
+\.
+
+
+--
+-- Data for Name: directors; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.directors (id, full_name, birth_year, death_year, photo, countryid) FROM stdin;
+1	Christopher Nolan	1970-07-30	\N	nolan.jpg	2
+2	Steven Spielberg	1946-12-18	\N	spielberg.jpg	1
+3	Martin Scorsese	1942-11-17	\N	scorsese.jpg	1
+4	Quentin Tarantino	1963-03-27	\N	tarantino.jpg	1
+5	Federico Fellini	1920-01-20	1993-10-31	fellini.jpg	6
+6	Alfred Hitchcock	1899-08-13	1980-04-29	hitchcock.jpg	2
+7	Stanley Kubrick	1928-07-26	1999-03-07	kubrick.jpg	1
+8	Akira Kurosawa	1910-03-23	1998-09-06	kurosawa.jpg	7
+9	James Cameron	1954-08-16	\N	cameron.jpg	5
+10	Denis Villeneuve	1967-10-03	\N	villeneuve.jpg	5
+11	Luc Besson	1959-03-18	\N	besson.jpg	3
+12	Hayao Miyazaki	1941-01-05	\N	miyazaki.jpg	7
+13	Pedro Almodóvar	1949-09-25	\N	almodovar.jpg	8
+14	David Fincher	1962-08-28	\N	fincher.jpg	1
+15	Greta Gerwig	1983-08-04	\N	gerwig.jpg	1
+16	Guy Ritchie	1968-09-10	\N	ritchie.jpg	2
+17	Wes Anderson	1969-05-01	\N	anderson.jpg	1
+18	Peter Jackson	1961-10-31	\N	jackson.jpg	9
+19	George Miller	1945-03-03	\N	miller.jpg	9
+20	Miroslav Slaboshpytskyi	1974-10-17	\N	miro.jpg	10
+\.
+
+
+--
+-- Data for Name: genres; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.genres (id, title, description) FROM stdin;
+1	Sci-Fi	Science Fiction
+2	Drama	Dramatic stories
+3	Action	High-paced action
+4	Comedy	Humorous content
+5	Horror	Scary movies
+6	Thriller	Suspenseful stories
+7	Fantasy	Magical worlds
+8	Crime	Criminal underworld
+9	Adventure	Journey stories
+10	Biography	Life stories
+\.
+
+
+--
+-- Data for Name: locations; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.locations (id, countryid, city) FROM stdin;
+1	1	Hollywood
+2	2	London
+3	3	Paris
+4	4	Berlin
+5	5	Toronto
+6	6	Rome
+7	7	Tokyo
+8	8	Madrid
+9	9	Sydney
+10	10	Kyiv
+\.
+
+
+--
+-- Data for Name: movies; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.movies (id, title, year, poster, genreid, studioid) FROM stdin;
+1	Inception	2010-07-16	inception.jpg	1	1
+2	The Dark Knight	2008-07-18	dark_knight.jpg	3	1
+3	Interstellar	2014-11-07	interstellar.jpg	1	3
+4	Pulp Fiction	1994-10-14	pulp.jpg	8	2
+5	Gladiator	2000-05-05	gladiator.jpg	3	2
+6	Dune	2021-10-22	dune.jpg	1	1
+7	Leon	1994-11-18	leon.jpg	3	4
+8	Spirited Away	2001-07-20	spirited.jpg	7	7
+9	The Departed	2006-10-06	departed.jpg	8	1
+10	Mad Max: Fury Road	2015-05-15	madmax.jpg	3	1
+11	The Grand Budapest Hotel	2014-03-28	budapest.jpg	4	9
+12	Oppenheimer	2023-07-21	oppenheimer.jpg	10	2
+13	Barbie	2023-07-21	barbie.jpg	4	1
+14	Blade Runner 2049	2017-10-06	bladerunner.jpg	1	1
+15	Seven	1995-09-22	seven.jpg	6	3
+16	Parasite	2019-05-30	parasite.jpg	6	7
+17	La Dolce Vita	1960-02-05	dolce.jpg	2	6
+18	The Tribe	2014-05-21	tribe.jpg	2	8
+19	Joker	2019-10-04	joker.jpg	2	1
+20	Snatch	2000-08-23	snatch.jpg	8	9
+\.
+
+
+--
+-- Data for Name: movies_actors; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.movies_actors (actorid, movieid) FROM stdin;
+1	1
+3	2
+7	7
+9	1
+10	1
+10	2
+10	12
+11	13
+13	3
+14	3
+15	2
+16	13
+18	1
+\.
+
+
+--
+-- Data for Name: movies_directors; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.movies_directors (directorid, movieid) FROM stdin;
+1	1
+1	2
+1	3
+1	12
+10	6
+10	14
+3	9
+4	4
+11	7
+15	13
+16	20
+19	10
+17	11
+\.
+
+
+--
+-- Data for Name: studios; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.studios (id, title, logo, locationid) FROM stdin;
+1	Warner Bros	wb_logo.png	1
+2	Universal Pictures	universal.png	1
+3	Paramount	paramount.png	1
+4	StudioCanal	studiocanal.png	3
+5	Pathé	pathe.png	3
+6	Cinecittà	cinecitta.png	6
+7	Toho	toho.png	7
+8	Babelsberg	babelsberg.png	4
+9	Pinewood Studios	pinewood.png	2
+10	Village Roadshow	village.png	9
+\.
+
+
+--
+-- Name: actors_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.actors_id_seq', 21, true);
+
+
+--
+-- Name: countries_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.countries_id_seq', 10, true);
+
+
+--
+-- Name: directors_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.directors_id_seq', 21, true);
+
+
+--
+-- Name: genres_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.genres_id_seq', 10, true);
+
+
+--
+-- Name: locations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.locations_id_seq', 10, true);
+
+
+--
+-- Name: movies_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.movies_id_seq', 21, true);
+
+
+--
+-- Name: studios_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.studios_id_seq', 12, true);
+
+
+--
+-- Name: actors actors_full_name_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.actors
+    ADD CONSTRAINT actors_full_name_key UNIQUE (full_name);
+
+
+--
+-- Name: actors actors_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.actors
+    ADD CONSTRAINT actors_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: countries countries_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.countries
+    ADD CONSTRAINT countries_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: countries countries_title_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.countries
+    ADD CONSTRAINT countries_title_key UNIQUE (title);
+
+
+--
+-- Name: directors directors_full_name_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.directors
+    ADD CONSTRAINT directors_full_name_key UNIQUE (full_name);
+
+
+--
+-- Name: directors directors_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.directors
+    ADD CONSTRAINT directors_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: genres genres_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.genres
+    ADD CONSTRAINT genres_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: genres genres_title_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.genres
+    ADD CONSTRAINT genres_title_key UNIQUE (title);
+
+
+--
+-- Name: locations locations_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.locations
+    ADD CONSTRAINT locations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: movies movies_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.movies
+    ADD CONSTRAINT movies_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: movies movies_title_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.movies
+    ADD CONSTRAINT movies_title_key UNIQUE (title);
+
+
+--
+-- Name: studios studios_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.studios
+    ADD CONSTRAINT studios_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: studios studios_title_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.studios
+    ADD CONSTRAINT studios_title_key UNIQUE (title);
+
+
+--
+-- Name: actors actors_countryid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.actors
+    ADD CONSTRAINT actors_countryid_fkey FOREIGN KEY (countryid) REFERENCES public.countries(id) ON DELETE SET NULL;
+
+
+--
+-- Name: directors directors_countryid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.directors
+    ADD CONSTRAINT directors_countryid_fkey FOREIGN KEY (countryid) REFERENCES public.countries(id) ON DELETE SET NULL;
+
+
+--
+-- Name: locations locations_country_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.locations
+    ADD CONSTRAINT locations_country_id_fkey FOREIGN KEY (countryid) REFERENCES public.countries(id) ON DELETE CASCADE;
+
+
+--
+-- Name: movies_actors movies_actors_actorid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.movies_actors
+    ADD CONSTRAINT movies_actors_actorid_fkey FOREIGN KEY (actorid) REFERENCES public.actors(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: movies_actors movies_actors_movieid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.movies_actors
+    ADD CONSTRAINT movies_actors_movieid_fkey FOREIGN KEY (movieid) REFERENCES public.movies(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: movies_directors movies_directors_directorid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.movies_directors
+    ADD CONSTRAINT movies_directors_directorid_fkey FOREIGN KEY (directorid) REFERENCES public.directors(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: movies_directors movies_directors_movieid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.movies_directors
+    ADD CONSTRAINT movies_directors_movieid_fkey FOREIGN KEY (movieid) REFERENCES public.movies(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: movies movies_genreid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.movies
+    ADD CONSTRAINT movies_genreid_fkey FOREIGN KEY (genreid) REFERENCES public.genres(id) ON DELETE SET NULL;
+
+
+--
+-- Name: movies movies_studioid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.movies
+    ADD CONSTRAINT movies_studioid_fkey FOREIGN KEY (studioid) REFERENCES public.studios(id) ON DELETE SET NULL;
+
+
+--
+-- Name: studios studios_locationid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.studios
+    ADD CONSTRAINT studios_locationid_fkey FOREIGN KEY (locationid) REFERENCES public.locations(id) ON DELETE CASCADE;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
+\unrestrict yfcp5f4S50x47b7HY1jE9FqHP3l2fVb7ziWdL9ZVupl8mz7GBvNcdZrW9XZhzan
+
