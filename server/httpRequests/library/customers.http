@@ -1,0 +1,32 @@
+GET http://localhost:5000/customers
+
+###
+
+GET http://localhost:5000/customers/2
+
+###
+
+POST http://localhost:5000/customers HTTP/1.1
+Content-Type: application/json
+
+{
+    "full_name": "Ricardo Pereira da Silva",
+    "email": "ricardo_pereira@gmail.com",
+    "nationality": "BEL"
+}
+
+###
+
+PUT http://localhost:5000/customers HTTP/1.1
+Content-Type: application/json
+
+{
+    "id": 20,
+    "full_name": "Michael Jackson 2",
+    "email": "jackson2@gmail.com",
+    "nationality": "SWE"
+}
+
+###
+
+DELETE http://localhost:5000/customers/20

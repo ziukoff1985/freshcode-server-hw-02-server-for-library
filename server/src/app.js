@@ -7,6 +7,7 @@ const express = require('express');
 
 const BooksControllers = require('./controllers/booksController');
 const AuthorsController = require('./controllers/authorsController');
+const CustomersController = require('./controllers/customersController');
 
 const app = express();
 app.use(express.json());
@@ -26,6 +27,12 @@ app.get('/authors/:authorId', AuthorsController.getAuthorById);
 app.post('/authors', AuthorsController.createAuthor);
 app.put('/authors', AuthorsController.updateAuthor);
 app.delete('/authors/:authorId', AuthorsController.deleteAuthor);
+
+app.get('/customers', CustomersController.getAllCustomers);
+// app.get('/customers/:customerId', CustomersController.getCustomerById);
+// app.post('/customers', CustomersController.createCustomer);
+// app.put('/customers', CustomersController.updateCustomer);
+// app.delete('/customers/:customerId', CustomersController.deleteCustomer);
 
 // app.get('/actors', ActorsController.getAllActors);
 // app.get('/actors/:actorId', ActorsController.getActorById);
