@@ -30,7 +30,7 @@ app.delete('/authors/:authorId', AuthorsController.deleteAuthor);
 
 app.get('/customers', CustomersController.getAllCustomers);
 app.get('/customers/:customerId', CustomersController.getCustomerById);
-// app.post('/customers', CustomersController.createCustomer);
+app.post('/customers', CustomersController.createCustomer);
 // app.put('/customers', CustomersController.updateCustomer);
 // app.delete('/customers/:customerId', CustomersController.deleteCustomer);
 

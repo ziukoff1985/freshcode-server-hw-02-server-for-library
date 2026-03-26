@@ -37,6 +37,24 @@ class CustomersController {
             res.status(500).send('Internal server error');
         }
     }
+
+    async createCustomer(req, res) {
+        try {
+            const { full_name, email, phone, password } = req.body;
+            const newCustomer = await db.query(
+                `
+                INSERT INTO customers (full_name, email, phone, password)
+                VALUES ($1, $2, $3, $4)
+                RETURNING *
+                `,
+                [full_name, email, phone, password],
+            );
+            res.status(200).json(newCustomer.rows[0]);
+        } catch (error) {
+            console.log(error);
+            res.status(500).send('Internal server error');
+        }
+    }
 }
 
 module.exports = new CustomersController();
