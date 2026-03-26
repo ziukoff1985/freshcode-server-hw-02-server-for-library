@@ -39,6 +39,24 @@ class AuthorsController {
             res.status(500).send('Internal server error');
         }
     }
+
+    async createAuthor(req, res) {
+        try {
+            const { full_name, email, nationality } = req.body;
+            const newAuthor = await db.query(
+                `
+                INSERT INTO authors (full_name, email, nationality_id)
+                VALUES ($1, $2, (SELECT id FROM nationalities WHERE title=$3))
+                RETURNING *
+                `,
+                [full_name, email, nationality],
+            );
+            res.status(200).json(newAuthor.rows[0]);
+        } catch (error) {
+            console.log(error);
+            res.status(500).send('Internal server error');
+        }
+    }
 }
 
 module.exports = new AuthorsController();
