@@ -10,11 +10,11 @@ POST http://localhost:5000/books HTTP/1.1
 Content-Type: application/json
 
 {
-    "full_name": "James Kirk",
-    "birth_year": "1989-01-14",
-    "death_year": "2026-02-24",
-    "photo": "kirk.jpg",
-    "country": "AUS"
+    "title": "Some Book 2",
+    "genre": "Drama",
+    "shelf": "Shelf #5",
+    "description": "Some description",
+    "image": "some_book_2.jpg"
 }
 
 ###

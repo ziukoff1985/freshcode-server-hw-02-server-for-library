@@ -39,6 +39,24 @@ class BooksControllers {
             res.status(500).send('Internal server error');
         }
     }
+
+    async createBook(req, res) {
+        try {
+            const { title, genre, shelf, description, image } = req.body;
+            const newBook = await db.query(
+                `
+                INSERT INTO books (title, genre_id, shelf_id, description, image)
+                VALUES ($1, (SELECT id FROM genres WHERE title=$2), (SELECT id FROM shelves WHERE title=$3), $4, $5)
+                RETURNING *
+                `,
+                [title, genre, shelf, description, image],
+            );
+            res.status(200).json(newBook.rows[0]);
+        } catch (error) {
+            console.log(error);
+            res.status(500).send('Internal server error');
+        }
+    }
 }
 
 module.exports = new BooksControllers();
