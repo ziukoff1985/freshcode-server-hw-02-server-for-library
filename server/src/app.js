@@ -18,7 +18,7 @@ app.get('/books', BooksControllers.getAllBooks);
 app.get('/books/:bookId', BooksControllers.getBookById);
 app.post('/books', BooksControllers.createBook);
 app.put('/books', BooksControllers.updateBook);
-// app.delete('/books/:bookId', BooksControllers.deleteBook);
+app.delete('/books/:bookId', BooksControllers.deleteBook);
 
 // app.get('/actors', ActorsController.getAllActors);
 // app.get('/actors/:actorId', ActorsController.getActorById);
