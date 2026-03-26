@@ -57,6 +57,31 @@ class BooksControllers {
             res.status(500).send('Internal server error');
         }
     }
+
+    async updateBook(req, res) {
+        try {
+            const { id, title, genre, shelf, description, image } = req.body;
+            const updatedBook = await db.query(
+                `
+                UPDATE books
+                SET 
+                title=$2, 
+                genre_id=(SELECT id FROM genres WHERE title=$3), shelf_id=(SELECT id FROM shelves WHERE title=$4), description=$5, 
+                image=$6
+                WHERE id=$1
+                RETURNING *
+                `,
+                [id, title, genre, shelf, description, image],
+            );
+            if (updatedBook.rows.length === 0) {
+                return res.status(404).send('Book not found');
+            }
+            res.status(200).json(updatedBook.rows[0]);
+        } catch (error) {
+            console.log(error);
+            res.status(500).send('Internal server error');
+        }
+    }
 }
 
 module.exports = new BooksControllers();
