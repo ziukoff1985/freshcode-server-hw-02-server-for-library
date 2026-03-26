@@ -57,6 +57,31 @@ class AuthorsController {
             res.status(500).send('Internal server error');
         }
     }
+
+    async updateAuthor(req, res) {
+        try {
+            const { id, full_name, email, nationality } = req.body;
+            const updatedActor = await db.query(
+                `
+            UPDATE authors
+            SET
+            full_name=$2,
+            email=$3,
+            nationality_id=(SELECT id FROM nationalities WHERE title=$4)
+            WHERE id=$1
+            RETURNING *
+            `,
+                [id, full_name, email, nationality],
+            );
+            if (updatedActor.rows.length === 0) {
+                return res.status(404).send('Author not found');
+            }
+            res.status(200).json(updatedActor.rows[0]);
+        } catch (error) {
+            console.log(error);
+            res.status(500).send('Internal server error');
+        }
+    }
 }
 
 module.exports = new AuthorsController();

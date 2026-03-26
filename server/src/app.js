@@ -24,7 +24,7 @@ app.delete('/books/:bookId', BooksControllers.deleteBook);
 app.get('/authors', AuthorsController.getAllAuthors);
 app.get('/authors/:authorId', AuthorsController.getAuthorById);
 app.post('/authors', AuthorsController.createAuthor);
-// app.put('/authors', AuthorsController.updateAuthor);
+app.put('/authors', AuthorsController.updateAuthor);
 // app.delete('/authors/:authorId', AuthorsController.deleteAuthor);
 // app.get('/actors', ActorsController.getAllActors);
 // app.get('/actors/:actorId', ActorsController.getActorById);

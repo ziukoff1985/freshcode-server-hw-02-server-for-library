@@ -21,12 +21,10 @@ PUT http://localhost:5000/authors HTTP/1.1
 Content-Type: application/json
 
 {
-    "id": 23,
-    "title": "Some Book 4",
-    "genre": "Drama",
-    "shelf": "Shelf #5",
-    "description": "Some description",
-    "image": "some_book_2.jpg"
+    "id": 20,
+    "full_name": "Michael Jackson 2",
+    "email": "jackson2@gmail.com",
+    "nationality": "SWE"
 }
 
 ###
