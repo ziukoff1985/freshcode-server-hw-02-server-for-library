@@ -32,7 +32,7 @@ app.get('/customers', CustomersController.getAllCustomers);
 app.get('/customers/:customerId', CustomersController.getCustomerById);
 app.post('/customers', CustomersController.createCustomer);
 app.put('/customers', CustomersController.updateCustomer);
-// app.delete('/customers/:customerId', CustomersController.deleteCustomer);
+app.delete('/customers/:customerId', CustomersController.deleteCustomer);
 
 // app.get('/actors', ActorsController.getAllActors);
 // app.get('/actors/:actorId', ActorsController.getActorById);

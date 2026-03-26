@@ -81,6 +81,27 @@ class CustomersController {
             res.status(500).send('Internal server error');
         }
     }
+
+    async deleteCustomer(req, res) {
+        try {
+            const { customerId } = req.params;
+            const deletedCustomer = await db.query(
+                `
+                DELETE FROM customers
+                WHERE id=$1
+                RETURNING full_name, id
+                `,
+                [customerId],
+            );
+            if (deletedCustomer.rows.length === 0) {
+                return res.status(404).send('Customer not found');
+            }
+            res.status(200).json(deletedCustomer.rows[0]);
+        } catch (error) {
+            console.log(error);
+            res.status(500).send('Internal server error');
+        }
+    }
 }
 
 module.exports = new CustomersController();
