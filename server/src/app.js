@@ -8,7 +8,7 @@ const router = require('./routers/index');
 const app = express();
 app.use(express.json());
 
-app.use(router);
+app.use('/api', router);
 
 app.get('/', (req, res) => {
     res.send('This is Library home page!');
