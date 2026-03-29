@@ -1,13 +1,14 @@
 const { Router } = require('express');
 
 const booksController = require('../controllers/booksController');
+const { validateBook } = require('../middleware/validate.mw');
 
 const router = new Router();
 
 router
     .route('/')
     .get(booksController.getAllBooks)
-    .post(booksController.createBook)
+    .post(validateBook, booksController.createBook)
     .put(booksController.updateBook);
 
 router

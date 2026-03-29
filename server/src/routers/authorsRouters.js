@@ -3,6 +3,7 @@
 const { Router } = require('express');
 
 const authorController = require('../controllers/authorsController');
+const { validateAuthor } = require('../middleware/validate.mw');
 
 // * створюємо екземпляр класу Router
 const router = new Router();
@@ -11,7 +12,7 @@ const router = new Router();
 router
     .route('/')
     .get(authorController.getAllAuthors)
-    .post(authorController.createAuthor)
+    .post(validateAuthor, authorController.createAuthor)
     .put(authorController.updateAuthor);
 
 router

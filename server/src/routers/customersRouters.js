@@ -1,12 +1,13 @@
 const { Router } = require('express');
 const booksController = require('../controllers/customersController');
+const { validateCustomer } = require('../middleware/validate.mw');
 
 const router = new Router();
 
 router
     .route('/')
     .get(booksController.getAllCustomers)
-    .post(booksController.createCustomer)
+    .post(validateCustomer, booksController.createCustomer)
     .put(booksController.updateCustomer);
 
 router

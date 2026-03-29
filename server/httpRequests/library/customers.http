@@ -10,8 +10,8 @@ POST http://localhost:5000/api/customers HTTP/1.1
 Content-Type: application/json
 
 {
-    "full_name": "Ricardo Pereira da Silva 2",
-    "email": "ricardo_pereira2@gmail.com",
+    "full_name": "Ricardo Pereira da Silva 3",
+    "email": "ricardo_pereira3@gmail.com",
     "phone": "+55 11 99999-9999",
     "password": "12345678"
 }
