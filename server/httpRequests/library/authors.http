@@ -10,7 +10,7 @@ POST http://localhost:5000/api/authors HTTP/1.1
 Content-Type: application/json
 
 {
-    "full_name": "Ricardo Pereira da Silva 3",
+    "full_name": "Q",
     "email": "ricardo_pereira12345@gmail.com",
     "nationality": "BEL"
 }

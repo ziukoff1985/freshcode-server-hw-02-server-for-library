@@ -20,7 +20,7 @@ const validateBook = async (req, res, next) => {
         req.body = validatedBook;
         next();
     } catch (error) {
-        next(`Error: ${error}`);
+        next(error);
     }
 };
 
@@ -42,7 +42,7 @@ const validateAuthor = async (req, res, next) => {
         req.body = validatedAuthor;
         next();
     } catch (error) {
-        next(`Error: ${error}`);
+        next(error);
     }
 };
 
@@ -63,7 +63,7 @@ const validateCustomer = async (req, res, next) => {
         req.body = validatedCustomer;
         next();
     } catch (error) {
-        next(`Error: ${error}`);
+        next(error);
     }
 };
 

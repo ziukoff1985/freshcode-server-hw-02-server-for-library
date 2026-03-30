@@ -9,7 +9,12 @@ const BOOK_VALIDATION_SCHEMA = yup.object().shape({
 });
 
 const AUTHOR_VALIDATION_SCHEMA = yup.object().shape({
-    full_name: yup.string().nonNullable().required('Full name is required'),
+    full_name: yup
+        .string()
+        .trim()
+        .min(2)
+        .max(30)
+        .required('Full name is required'),
     email: yup.string().email('Invalid email format').nonNullable().required(),
     nationality: yup.string(),
 });
