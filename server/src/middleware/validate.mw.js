@@ -1,8 +1,4 @@
-const {
-    BOOK_VALIDATION_SCHEMA,
-    AUTHOR_VALIDATION_SCHEMA,
-    CUSTOMER_VALIDATION_SCHEMA,
-} = require('../utils/validationSchemas');
+const schemas = require('../utils/validationSchemas');
 
 const validateBook = async (req, res, next) => {
     const { body } = req;
@@ -15,9 +11,12 @@ const validateBook = async (req, res, next) => {
     // });
 
     try {
-        const validatedBook = await BOOK_VALIDATION_SCHEMA.validate(body, {
-            abortEarly: false,
-        });
+        const validatedBook = await schemas.BOOK_VALIDATION_SCHEMA.validate(
+            body,
+            {
+                abortEarly: false,
+            },
+        );
         req.body = validatedBook;
         next();
     } catch (error) {
@@ -34,9 +33,12 @@ const validateAuthor = async (req, res, next) => {
     // });
 
     try {
-        const validatedAuthor = await AUTHOR_VALIDATION_SCHEMA.validate(body, {
-            abortEarly: false,
-        });
+        const validatedAuthor = await schemas.AUTHOR_VALIDATION_SCHEMA.validate(
+            body,
+            {
+                abortEarly: false,
+            },
+        );
         req.body = validatedAuthor;
         next();
     } catch (error) {
@@ -54,12 +56,10 @@ const validateCustomer = async (req, res, next) => {
     // });
 
     try {
-        const validatedCustomer = await CUSTOMER_VALIDATION_SCHEMA.validate(
-            body,
-            {
+        const validatedCustomer =
+            await schemas.CUSTOMER_VALIDATION_SCHEMA.validate(body, {
                 abortEarly: false,
-            },
-        );
+            });
         req.body = validatedCustomer;
         next();
     } catch (error) {
