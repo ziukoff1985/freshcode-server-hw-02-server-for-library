@@ -15,7 +15,6 @@ class BooksControllers {
         } catch (error) {
             console.log(error);
             next(error);
-            // res.status(500).send('Internal server error');
         }
     }
 
@@ -38,7 +37,6 @@ class BooksControllers {
         } catch (error) {
             console.log(error);
             next(error);
-            // res.status(500).send('Internal server error');
         }
     }
 
@@ -57,7 +55,6 @@ class BooksControllers {
         } catch (error) {
             console.log(error);
             next(error);
-            // res.status(500).send('Internal server error');
         }
     }
 
@@ -83,7 +80,6 @@ class BooksControllers {
         } catch (error) {
             console.log(error);
             next(error);
-            // res.status(500).send('Internal server error');
         }
     }
 
@@ -105,7 +101,6 @@ class BooksControllers {
         } catch (error) {
             console.log(error);
             next(error);
-            // res.status(500).send('Internal server error');
         }
     }
 }

@@ -10,8 +10,8 @@ POST http://localhost:5000/api/authors HTTP/1.1
 Content-Type: application/json
 
 {
-    "full_name": "Qqwerq",
-    "email": "qwerq@gmail.com",
+    "full_name": "Ricardo Pereira",
+    "email": "ricardo_pereira12345@gmail.com",
     "nationality": "BEL"
 }
 
@@ -21,12 +21,12 @@ PUT http://localhost:5000/api/authors HTTP/1.1
 Content-Type: application/json
 
 {
-    "id": 39,
-    "full_name": "Maaa",
-    "email": "jackson2222@gmail.com",
+    "id": 26,
+    "full_name": "Michael Jackson 2",
+    "email": "jackson2@gmail.com",
     "nationality": "SWE"
 }
 
 ###
 
-DELETE http://localhost:5000/api/authors/38
+DELETE http://localhost:5000/api/authors/26

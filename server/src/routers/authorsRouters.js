@@ -1,9 +1,11 @@
 const { Router } = require('express');
 // ----------------------------------
 const authorController = require('../controllers/authorsController');
-const { validateAuthor } = require('../middleware/validate.mw');
+const { validate } = require('../middleware/index');
 // ----------------------------------
 const router = new Router();
+
+const { validateAuthor } = validate;
 
 router
     .route('/')

@@ -10,8 +10,8 @@ POST http://localhost:5000/api/customers HTTP/1.1
 Content-Type: application/json
 
 {
-    "full_name": "Ricardo Pereira da Silva 30",
-    "email": "ricardo_pereira3@gmail.com",
+    "full_name": "Ricardo Garcia",
+    "email": "ricardo@gmail.com",
     "phone": "+55 11 99999-9999",
     "password": "12345678"
 }
@@ -22,13 +22,13 @@ PUT http://localhost:5000/api/customers HTTP/1.1
 Content-Type: application/json
 
 {
-    "id": 21,
-    "full_name": "Michael Jackson 3",
-    "email": "jackson3@gmail.com",
+    "id": 25,
+    "full_name": "Michael Jackson 5",
+    "email": "g-b@gmail.com",
     "phone": "+55 11 99999-9999",
     "password": "qwertyuiop"
 }
 
 ###
 
-DELETE http://localhost:5000/api/customers/21
+DELETE http://localhost:5000/api/customers/2
