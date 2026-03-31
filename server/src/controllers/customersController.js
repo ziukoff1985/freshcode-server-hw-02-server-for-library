@@ -1,4 +1,5 @@
 const db = require('../../db');
+// ----------------------------------
 
 class CustomersController {
     async getAllCustomers(req, res, next) {

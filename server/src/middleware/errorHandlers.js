@@ -1,4 +1,5 @@
 const { ValidationError } = require('yup');
+// ----------------------------------
 
 const validationErrorHandler = (error, req, res, next) => {
     if (error instanceof ValidationError) {
@@ -18,7 +19,7 @@ const errorHandler = (error, req, res, next) => {
         return res.status(409).send({
             errors: [
                 {
-                    title: 'This record already exists',
+                    title: 'Duplicate error',
                     detail: error.detail,
                 },
             ],

@@ -1,5 +1,6 @@
 const yup = require('yup');
 // ----------------------------------
+
 const BOOK_VALIDATION_SCHEMA = yup.object().shape({
     title: yup.string().trim().max(255).required('Book title is required'),
     genre: yup.string().required('Book genre is required'),

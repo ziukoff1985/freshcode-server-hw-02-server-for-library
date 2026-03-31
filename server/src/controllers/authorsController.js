@@ -1,4 +1,5 @@
 const db = require('../../db');
+// ----------------------------------
 
 class AuthorsController {
     async getAllAuthors(req, res, next) {
