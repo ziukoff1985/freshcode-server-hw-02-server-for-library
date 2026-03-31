@@ -8,7 +8,7 @@ router
     .route('/')
     .get(booksController.getAllCustomers)
     .post(validateCustomer, booksController.createCustomer)
-    .put(booksController.updateCustomer);
+    .put(validateCustomer, booksController.updateCustomer);
 
 router
     .route('/:customerId')

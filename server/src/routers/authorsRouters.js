@@ -13,7 +13,7 @@ router
     .route('/')
     .get(authorController.getAllAuthors)
     .post(validateAuthor, authorController.createAuthor)
-    .put(authorController.updateAuthor);
+    .put(validateAuthor, authorController.updateAuthor);
 
 router
     .route('/:authorId')
