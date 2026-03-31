@@ -1,7 +1,7 @@
 const db = require('../../db');
 
 class BooksControllers {
-    async getAllBooks(req, res) {
+    async getAllBooks(req, res, next) {
         try {
             const books = await db.query(
                 `
@@ -14,11 +14,12 @@ class BooksControllers {
             res.status(200).json(books.rows);
         } catch (error) {
             console.log(error);
-            res.status(500).send('Internal server error');
+            next(error);
+            // res.status(500).send('Internal server error');
         }
     }
 
-    async getBookById(req, res) {
+    async getBookById(req, res, next) {
         try {
             const { bookId } = req.params;
             const book = await db.query(
@@ -36,11 +37,12 @@ class BooksControllers {
             res.status(200).json(book.rows[0]);
         } catch (error) {
             console.log(error);
-            res.status(500).send('Internal server error');
+            next(error);
+            // res.status(500).send('Internal server error');
         }
     }
 
-    async createBook(req, res) {
+    async createBook(req, res, next) {
         try {
             const { title, genre, shelf, description, image } = req.body;
             const newBook = await db.query(
@@ -54,11 +56,12 @@ class BooksControllers {
             res.status(200).json(newBook.rows[0]);
         } catch (error) {
             console.log(error);
-            res.status(500).send('Internal server error');
+            next(error);
+            // res.status(500).send('Internal server error');
         }
     }
 
-    async updateBook(req, res) {
+    async updateBook(req, res, next) {
         try {
             const { id, title, genre, shelf, description, image } = req.body;
             const updatedBook = await db.query(
@@ -79,11 +82,12 @@ class BooksControllers {
             res.status(200).json(updatedBook.rows[0]);
         } catch (error) {
             console.log(error);
-            res.status(500).send('Internal server error');
+            next(error);
+            // res.status(500).send('Internal server error');
         }
     }
 
-    async deleteBook(req, res) {
+    async deleteBook(req, res, next) {
         try {
             const { bookId } = req.params;
             const deletedBook = await db.query(
@@ -100,7 +104,8 @@ class BooksControllers {
             res.status(200).json(deletedBook.rows[0]);
         } catch (error) {
             console.log(error);
-            res.status(500).send('Internal server error');
+            next(error);
+            // res.status(500).send('Internal server error');
         }
     }
 }

@@ -1,7 +1,7 @@
 const db = require('../../db');
 
 class CustomersController {
-    async getAllCustomers(req, res) {
+    async getAllCustomers(req, res, next) {
         try {
             const customers = await db.query(
                 `
@@ -13,11 +13,11 @@ class CustomersController {
             res.status(200).json(customers.rows);
         } catch (error) {
             console.log(error);
-            res.status(500).send('Internal server error');
+            next(error);
         }
     }
 
-    async getCustomerById(req, res) {
+    async getCustomerById(req, res, next) {
         try {
             const { customerId } = req.params;
             const customer = await db.query(
@@ -34,29 +34,29 @@ class CustomersController {
             res.status(200).json(customer.rows[0]);
         } catch (error) {
             console.log(error);
-            res.status(500).send('Internal server error');
+            next(error);
         }
     }
 
-    async createCustomer(req, res) {
+    async createCustomer(req, res, next) {
         try {
             const { full_name, email, phone, password } = req.body;
             const newCustomer = await db.query(
                 `
                 INSERT INTO customers (full_name, email, phone, password)
                 VALUES ($1, $2, $3, $4)
-                RETURNING *
+                RETURNING id, full_name, email, phone
                 `,
                 [full_name, email, phone, password],
             );
             res.status(200).json(newCustomer.rows[0]);
         } catch (error) {
             console.log(error);
-            res.status(500).send('Internal server error');
+            next(error);
         }
     }
 
-    async updateCustomer(req, res) {
+    async updateCustomer(req, res, next) {
         try {
             const { id, full_name, email, phone, password } = req.body;
             const updatedCustomer = await db.query(
@@ -68,7 +68,7 @@ class CustomersController {
                 phone=$4,
                 password=$5
                 WHERE id=$1
-                RETURNING *
+                RETURNING id, full_name, email, phone
                 `,
                 [id, full_name, email, phone, password],
             );
@@ -78,11 +78,11 @@ class CustomersController {
             res.status(200).json(updatedCustomer.rows[0]);
         } catch (error) {
             console.log(error);
-            res.status(500).send('Internal server error');
+            next(error);
         }
     }
 
-    async deleteCustomer(req, res) {
+    async deleteCustomer(req, res, next) {
         try {
             const { customerId } = req.params;
             const deletedCustomer = await db.query(
@@ -99,7 +99,7 @@ class CustomersController {
             res.status(200).json(deletedCustomer.rows[0]);
         } catch (error) {
             console.log(error);
-            res.status(500).send('Internal server error');
+            next(error);
         }
     }
 }

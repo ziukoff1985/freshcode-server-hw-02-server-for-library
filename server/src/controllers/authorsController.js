@@ -1,7 +1,7 @@
 const db = require('../../db');
 
 class AuthorsController {
-    async getAllAuthors(req, res) {
+    async getAllAuthors(req, res, next) {
         try {
             const authors = await db.query(
                 `
@@ -14,11 +14,11 @@ class AuthorsController {
             res.status(200).json(authors.rows);
         } catch (error) {
             console.log(error);
-            res.status(500).send('Internal server error');
+            next(error);
         }
     }
 
-    async getAuthorById(req, res) {
+    async getAuthorById(req, res, next) {
         try {
             const { authorId } = req.params;
             const author = await db.query(
@@ -36,11 +36,11 @@ class AuthorsController {
             res.status(200).json(author.rows[0]);
         } catch (error) {
             console.log(error);
-            res.status(500).send('Internal server error');
+            next(error);
         }
     }
 
-    async createAuthor(req, res) {
+    async createAuthor(req, res, next) {
         try {
             const { full_name, email, nationality } = req.body;
             const newAuthor = await db.query(
@@ -54,11 +54,11 @@ class AuthorsController {
             res.status(200).json(newAuthor.rows[0]);
         } catch (error) {
             console.log(error);
-            res.status(500).send('Internal server error');
+            next(error);
         }
     }
 
-    async updateAuthor(req, res) {
+    async updateAuthor(req, res, next) {
         try {
             const { id, full_name, email, nationality } = req.body;
             const updatedActor = await db.query(
@@ -79,11 +79,11 @@ class AuthorsController {
             res.status(200).json(updatedActor.rows[0]);
         } catch (error) {
             console.log(error);
-            res.status(500).send('Internal server error');
+            next(error);
         }
     }
 
-    async deleteAuthor(req, res) {
+    async deleteAuthor(req, res, next) {
         try {
             const { authorId } = req.params;
             const deletedAuthor = await db.query(
@@ -100,7 +100,7 @@ class AuthorsController {
             res.status(200).json(deletedAuthor.rows[0]);
         } catch (error) {
             console.log(error);
-            res.status(500).send('Internal server error');
+            next(error);
         }
     }
 }

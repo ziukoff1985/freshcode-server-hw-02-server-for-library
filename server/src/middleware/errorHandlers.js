@@ -14,7 +14,18 @@ const errorHandler = (error, req, res, next) => {
         return;
     }
 
-    res.status(err?.status ?? 500).send({
+    if (error.code === '23505') {
+        return res.status(409).send({
+            errors: [
+                {
+                    title: 'This record already exists',
+                    detail: error.detail,
+                },
+            ],
+        });
+    }
+
+    res.status(error?.status ?? 500).send({
         errors: [
             {
                 title: error?.message ?? 'Internal server error',
