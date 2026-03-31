@@ -61,7 +61,7 @@ class AuthorsController {
     async updateAuthor(req, res, next) {
         try {
             const { id, full_name, email, nationality } = req.body;
-            const updatedActor = await db.query(
+            const updatedAuthor = await db.query(
                 `
             UPDATE authors
             SET
@@ -73,10 +73,10 @@ class AuthorsController {
             `,
                 [id, full_name, email, nationality],
             );
-            if (updatedActor.rows.length === 0) {
+            if (updatedAuthor.rows.length === 0) {
                 return res.status(404).send('Author not found');
             }
-            res.status(200).json(updatedActor.rows[0]);
+            res.status(200).json(updatedAuthor.rows[0]);
         } catch (error) {
             console.log(error);
             next(error);

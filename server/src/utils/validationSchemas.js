@@ -1,11 +1,11 @@
 const yup = require('yup');
 // ----------------------------------
 const BOOK_VALIDATION_SCHEMA = yup.object().shape({
-    title: yup.string().required('Book title is required'),
+    title: yup.string().trim().max(255).required('Book title is required'),
     genre: yup.string().required('Book genre is required'),
     shelf: yup.string().required('Book shelf is required'),
     description: yup.string().nullable(),
-    image: yup.string().nullable(),
+    image: yup.string().trim().max(255).nullable(),
 });
 
 const AUTHOR_VALIDATION_SCHEMA = yup.object().shape({
@@ -13,9 +13,14 @@ const AUTHOR_VALIDATION_SCHEMA = yup.object().shape({
         .string()
         .trim()
         .min(2)
-        .max(30)
+        .max(50)
         .required('Full name is required'),
-    email: yup.string().email('Invalid email format').required(),
+    email: yup
+        .string()
+        .trim()
+        .email('Invalid email format')
+        .max(255)
+        .required('Email is required'),
     nationality: yup.string().nullable(),
 });
 
@@ -24,11 +29,16 @@ const CUSTOMER_VALIDATION_SCHEMA = yup.object().shape({
         .string()
         .trim()
         .min(2)
-        .max(30)
+        .max(50)
         .required('Full name is required'),
-    email: yup.string().email('Invalid email format').nullable(),
-    phone: yup.string().nullable(),
-    password: yup.string().required('Password is required'),
+    email: yup
+        .string()
+        .trim()
+        .email('Invalid email format')
+        .max(255)
+        .nullable(),
+    phone: yup.string().trim().max(255).nullable(),
+    password: yup.string().trim().max(255).required('Password is required'),
 });
 
 module.exports = {
