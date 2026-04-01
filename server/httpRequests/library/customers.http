@@ -22,13 +22,13 @@ PUT http://localhost:5000/api/customers HTTP/1.1
 Content-Type: application/json
 
 {
-    "id": 33,
+    "id": 36,
     "full_name": "Maria Garcia",
-    "email": "maria@gmail.com",
+    "email": "maria1@gmail.com",
     "phone": "+55 11 99999-9999",
     "password": "qwerty"
 }
 
 ###
 
-DELETE http://localhost:5000/api/customers/32
+DELETE http://localhost:5000/api/customers/36
