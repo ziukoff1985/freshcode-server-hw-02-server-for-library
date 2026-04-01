@@ -25,9 +25,9 @@ Content-Type: application/json
 {
     "id": 34,
     "title": "Some book 2",
-    "genre": "Drama",
-    "shelf": "Shelf #5",
-    "description": "Some description",
+    "genre": "Fantazy",
+    "shelf": "Shelf #1",
+    "description": "Some description 2",
     "image": "some_book_2.jpg"
 }
 

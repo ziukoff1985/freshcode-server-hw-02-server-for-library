@@ -11,7 +11,7 @@ Content-Type: application/json
 
 {
     "full_name": "Ricardo Pereira",
-    "email": "ricardo_pereira12345@gmail.com",
+    "email": "ricardo@gmail.com",
     "nationality": "BEL"
 }
 
@@ -22,8 +22,8 @@ Content-Type: application/json
 
 {
     "id": 50,
-    "full_name": "Michael Jackson",
-    "email": "g-d-1m@gmail.com",
+    "full_name": "Johnny Walkers",
+    "email": "johnny@gmail.com",
     "nationality": "SWE"
 }
 
