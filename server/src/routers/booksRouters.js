@@ -1,17 +1,16 @@
 const { Router } = require('express');
 // ----------------------------------
 const booksController = require('../controllers/booksController');
-const { validate } = require('../middleware/index');
+const { validateBody } = require('../middleware/index');
+const { BOOK_VALIDATION_SCHEMA } = require('../utils/validationSchemas');
 // ----------------------------------
 const router = new Router();
-
-const { validateBook } = validate;
 
 router
     .route('/')
     .get(booksController.getAllBooks)
-    .post(validateBook, booksController.createBook)
-    .put(validateBook, booksController.updateBook);
+    .post(validateBody(BOOK_VALIDATION_SCHEMA), booksController.createBook)
+    .put(validateBody(BOOK_VALIDATION_SCHEMA), booksController.updateBook);
 
 router
     .route('/:bookId')

@@ -1,17 +1,22 @@
 const { Router } = require('express');
 // ----------------------------------
 const customersController = require('../controllers/customersController');
-const { validate } = require('../middleware/index');
+const { validateBody } = require('../middleware/index');
+const { CUSTOMER_VALIDATION_SCHEMA } = require('../utils/validationSchemas');
 // ----------------------------------
 const router = new Router();
-
-const { validateCustomer } = validate;
 
 router
     .route('/')
     .get(customersController.getAllCustomers)
-    .post(validateCustomer, customersController.createCustomer)
-    .put(validateCustomer, customersController.updateCustomer);
+    .post(
+        validateBody(CUSTOMER_VALIDATION_SCHEMA),
+        customersController.createCustomer,
+    )
+    .put(
+        validateBody(CUSTOMER_VALIDATION_SCHEMA),
+        customersController.updateCustomer,
+    );
 
 router
     .route('/:customerId')

@@ -14,7 +14,7 @@ const AUTHOR_VALIDATION_SCHEMA = yup.object().shape({
         .string()
         .trim()
         .min(2)
-        .max(50)
+        .max(100)
         .required('Full name is required'),
     email: yup
         .string()
@@ -30,7 +30,7 @@ const CUSTOMER_VALIDATION_SCHEMA = yup.object().shape({
         .string()
         .trim()
         .min(2)
-        .max(50)
+        .max(100)
         .required('Full name is required'),
     email: yup
         .string()
@@ -39,7 +39,12 @@ const CUSTOMER_VALIDATION_SCHEMA = yup.object().shape({
         .max(255)
         .nullable(),
     phone: yup.string().trim().max(255).nullable(),
-    password: yup.string().trim().max(255).required('Password is required'),
+    password: yup
+        .string()
+        .trim()
+        .min(6)
+        .max(255)
+        .required('Password is required'),
 });
 
 module.exports = {

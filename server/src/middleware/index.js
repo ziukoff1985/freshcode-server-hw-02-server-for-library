@@ -1,4 +1,2 @@
-module.exports = {
-    errorHandlers: require('./errorHandlers'),
-    validate: require('./validate.mw'),
-};
+module.exports.errorHandlers = require('./errorHandlers');
+module.exports.validateBody = require('./validate.mw');
