@@ -1,0 +1,798 @@
+--
+-- PostgreSQL database dump
+--
+
+\restrict fLheZZbd1qcGw16ESoWpnsesr9CMPD4zo3qhiyEdMkxtzIe9ssdtGPYfAR8bany
+
+-- Dumped from database version 18.3 (Ubuntu 18.3-1.pgdg24.04+1)
+-- Dumped by pg_dump version 18.3 (Ubuntu 18.3-1.pgdg24.04+1)
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET transaction_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: update_modified_column(); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.update_modified_column() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+    NEW."updatedAt" = now();
+    RETURN NEW;
+END;
+$$;
+
+
+ALTER FUNCTION public.update_modified_column() OWNER TO postgres;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- Name: authors; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.authors (
+    id integer NOT NULL,
+    full_name character varying(255) NOT NULL,
+    email character varying(255) NOT NULL,
+    nationality_id integer,
+    "createdAt" timestamp with time zone DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" timestamp with time zone
+);
+
+
+ALTER TABLE public.authors OWNER TO postgres;
+
+--
+-- Name: authors_books; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.authors_books (
+    "authorId" integer,
+    "bookId" integer,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public.authors_books OWNER TO postgres;
+
+--
+-- Name: authors_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.authors_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.authors_id_seq OWNER TO postgres;
+
+--
+-- Name: authors_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.authors_id_seq OWNED BY public.authors.id;
+
+
+--
+-- Name: books; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.books (
+    id integer NOT NULL,
+    title character varying(255) NOT NULL,
+    genre_id integer NOT NULL,
+    shelf_id integer NOT NULL,
+    description text,
+    "createdAt" timestamp with time zone DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" timestamp with time zone,
+    image character varying(255)
+);
+
+
+ALTER TABLE public.books OWNER TO postgres;
+
+--
+-- Name: books_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.books_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.books_id_seq OWNER TO postgres;
+
+--
+-- Name: books_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.books_id_seq OWNED BY public.books.id;
+
+
+--
+-- Name: customers; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.customers (
+    id integer NOT NULL,
+    full_name character varying(255) NOT NULL,
+    email character varying(255),
+    phone character varying(255),
+    "createdAt" timestamp with time zone DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" timestamp with time zone,
+    password character varying(255) NOT NULL
+);
+
+
+ALTER TABLE public.customers OWNER TO postgres;
+
+--
+-- Name: customers_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.customers_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.customers_id_seq OWNER TO postgres;
+
+--
+-- Name: customers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.customers_id_seq OWNED BY public.customers.id;
+
+
+--
+-- Name: genres; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.genres (
+    id integer NOT NULL,
+    title character varying(255) NOT NULL,
+    "createdAt" timestamp with time zone,
+    "updatedAt" timestamp with time zone
+);
+
+
+ALTER TABLE public.genres OWNER TO postgres;
+
+--
+-- Name: genres_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.genres_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.genres_id_seq OWNER TO postgres;
+
+--
+-- Name: genres_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.genres_id_seq OWNED BY public.genres.id;
+
+
+--
+-- Name: nationalities; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.nationalities (
+    id integer NOT NULL,
+    title character varying(255),
+    description text,
+    "createdAt" timestamp with time zone,
+    "updatedAt" timestamp with time zone
+);
+
+
+ALTER TABLE public.nationalities OWNER TO postgres;
+
+--
+-- Name: nationalities_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.nationalities_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.nationalities_id_seq OWNER TO postgres;
+
+--
+-- Name: nationalities_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.nationalities_id_seq OWNED BY public.nationalities.id;
+
+
+--
+-- Name: orders; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.orders (
+    id integer NOT NULL,
+    title character varying(255),
+    order_date date,
+    customer_id integer,
+    "createdAt" timestamp with time zone,
+    "updatedAt" timestamp with time zone
+);
+
+
+ALTER TABLE public.orders OWNER TO postgres;
+
+--
+-- Name: orders_books; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.orders_books (
+    "orderId" integer,
+    "bookId" integer,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public.orders_books OWNER TO postgres;
+
+--
+-- Name: orders_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.orders_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.orders_id_seq OWNER TO postgres;
+
+--
+-- Name: orders_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.orders_id_seq OWNED BY public.orders.id;
+
+
+--
+-- Name: shelves; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.shelves (
+    id integer NOT NULL,
+    title character varying(255),
+    description text,
+    "createdAt" timestamp with time zone,
+    "updatedAt" timestamp with time zone
+);
+
+
+ALTER TABLE public.shelves OWNER TO postgres;
+
+--
+-- Name: shelves_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.shelves_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.shelves_id_seq OWNER TO postgres;
+
+--
+-- Name: shelves_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.shelves_id_seq OWNED BY public.shelves.id;
+
+
+--
+-- Name: authors id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.authors ALTER COLUMN id SET DEFAULT nextval('public.authors_id_seq'::regclass);
+
+
+--
+-- Name: books id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.books ALTER COLUMN id SET DEFAULT nextval('public.books_id_seq'::regclass);
+
+
+--
+-- Name: customers id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.customers ALTER COLUMN id SET DEFAULT nextval('public.customers_id_seq'::regclass);
+
+
+--
+-- Name: genres id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.genres ALTER COLUMN id SET DEFAULT nextval('public.genres_id_seq'::regclass);
+
+
+--
+-- Name: nationalities id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.nationalities ALTER COLUMN id SET DEFAULT nextval('public.nationalities_id_seq'::regclass);
+
+
+--
+-- Name: orders id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.orders ALTER COLUMN id SET DEFAULT nextval('public.orders_id_seq'::regclass);
+
+
+--
+-- Name: shelves id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.shelves ALTER COLUMN id SET DEFAULT nextval('public.shelves_id_seq'::regclass);
+
+
+--
+-- Data for Name: authors; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.authors (id, full_name, email, nationality_id, "createdAt", "updatedAt") FROM stdin;
+1	Ernest Hemingway	e-h@gmail.com	1	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+2	Edgar Allan Poe	e-a-p@gmail.com	1	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+3	Stephen King	s-k@gmail.com	1	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+4	Theodore Dreiser	t-d@gmail.com	1	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+5	Mark Twain	m-t@gmail.com	1	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+6	Francis Scott Fitzgerald	f-s-f@gmail.com	1	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+7	Jack London	j-l@gmail.com	1	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+8	Margaret Mitchell	m-m@gmail.com	1	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+9	O Henry	o-h@gmail.com	1	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+10	Joanne Rowling	j-r@gmail.com	2	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+11	John Tolkien	j-t@gmail.com	2	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+12	Robert Louis Stevenson	r-l-s@gmail.com	2	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+13	Alexandre Dumas	a-d@gmail.com	5	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+14	Jules Verne	j-v@gmail.com	5	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+15	Stendal	stendal@gmail.com	5	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+16	Honore de Balzac	h-d-b@gmail.com	5	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+17	Guy de Maupassant	g-d-m@gmail.com	5	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+\.
+
+
+--
+-- Data for Name: authors_books; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.authors_books ("authorId", "bookId", "createdAt", "updatedAt") FROM stdin;
+\.
+
+
+--
+-- Data for Name: books; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.books (id, title, genre_id, shelf_id, description, "createdAt", "updatedAt", image) FROM stdin;
+1	Унесенные ветром	2	5	\N	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03	\N
+2	Гарри Поттер	5	1	\N	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03	\N
+3	Золотой жук	13	6	\N	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03	\N
+4	Сияние	10	2	\N	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03	\N
+5	Финансист	2	5	\N	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03	\N
+6	Великий Гэтсби	2	5	\N	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03	\N
+7	Морской волк	2	5	\N	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03	\N
+8	Вождь краснокожих	14	7	\N	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03	\N
+9	Остров сокровищ	8	3	\N	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03	\N
+15	Отец Горио	2	5	\N	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03	\N
+16	Милый друг	2	5	\N	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03	\N
+17	Приключения Тома Сойера	8	3	\N	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03	\N
+18	Прощай оружие	2	5	\N	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03	\N
+13	Чистый код	12	7	Book about development	2023-10-21 12:09:10.31+03	2023-10-22 13:12:00.841+03	\N
+11	JavaScript	12	5	Book about JavaScript	2023-10-21 12:09:10.31+03	2023-10-22 13:28:07.351+03	\N
+10	Сильмарилион	5	1	\N	2023-10-21 12:09:10.31+03	2023-10-28 12:59:54.043+03	1698487194009 - browser-vs-node.png
+14	Пармская обитель	2	5	\N	2023-10-21 12:09:10.31+03	2023-10-29 10:09:34.703+02	1698566974676 - bom.png
+\.
+
+
+--
+-- Data for Name: customers; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.customers (id, full_name, email, phone, "createdAt", "updatedAt", password) FROM stdin;
+3	Mick Box	m-b.gmail.com	\N	\N	\N	qwerty
+4	Freddie Mercury	f-m.gmail.com	\N	\N	\N	qwerty
+5	David Bowie	d-b.gmail.com	\N	\N	\N	qwerty
+6	Bill Gates	b-g.gmail.com	\N	\N	\N	qwerty
+7	Steven Jobs	s-b.gmail.com	\N	\N	\N	qwerty
+8	Mike Tyson	m-t.gmail.com	\N	\N	\N	qwerty
+9	Rocco Marchegiano	r-m.gmail.com	\N	\N	\N	qwerty
+10	Vito Carleone	v-c.gmail.com	\N	\N	\N	qwerty
+11	David Byron	g-b.gmail.com	\N	\N	\N	qwerty
+1	Jhon Doe	j-d@gmail.com_1	\N	2023-10-21 11:58:13.096+03	2026-03-31 14:24:43.304618+03	awerty
+33	Maria Garcia	maria@gmail.com	+55 11 99999-9999	2026-04-01 12:16:17.009107+03	2026-04-01 12:17:50.521983+03	qwerty
+\.
+
+
+--
+-- Data for Name: genres; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.genres (id, title, "createdAt", "updatedAt") FROM stdin;
+1	Criminal	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+2	Drama	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+3	Historical	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+4	Science Fiction	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+5	Fantazy	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+6	Romance	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+7	Biography	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+8	Adventures	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+9	Western	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+10	Fairy Tells	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+11	Miphology	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+12	Education	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+13	Detective	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+14	Comedy	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+15	Classic	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+\.
+
+
+--
+-- Data for Name: nationalities; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.nationalities (id, title, description, "createdAt", "updatedAt") FROM stdin;
+1	USA	United States of America	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+2	GB	Great Britain	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+3	UA	Ukraine	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+4	DE	Deutschland	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+5	FR	France	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+6	AUS	Australia	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+7	BEL	Belgium	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+8	BRA	Brazil	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+9	GE	Georgia	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+10	DK	Denmark	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+11	IL	Israel	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+12	IN	India	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+13	IE	Ireland	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+14	IT	Italy	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+15	CA	Canada	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+16	CN	China	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+17	KR	Korea, Republic of	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+18	LV	Latvia	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+19	LT	Lithuania	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+20	NL	Netherlands	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+21	NO	Norway	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+22	PL	Poland	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+23	PT	Portugal	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+24	TR	Turkey	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+25	FI	Finland	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+26	CZ	Czech Republic	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+27	CH	Switzerland	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+28	EE	Estonia	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+29	JP	Japan	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+30	NZ	New Zealand	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+31	PUR	Puerto Rico	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+32	MLT	Malta	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+33	BEN	Benin	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+34	SWE	Sweden	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+35	RU	Russian	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+36	ISL	Iceland	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+\.
+
+
+--
+-- Data for Name: orders; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.orders (id, title, order_date, customer_id, "createdAt", "updatedAt") FROM stdin;
+1	Request #1000-4321	2022-02-15	1	\N	\N
+3	Request #1000-4325	2022-02-27	5	\N	\N
+4	Request #1000-4326	2022-03-02	6	\N	\N
+5	Request #1000-4327	2022-03-08	7	\N	\N
+6	Request #1000-4328	2022-04-04	8	\N	\N
+7	Request #1000-4329	2022-05-01	9	\N	\N
+8	Request #1000-4330	2022-02-27	9	\N	\N
+9	Request  #1000-4324	2022-02-24	4	\N	\N
+10	Request #1000-4332	2022-04-04	8	\N	\N
+11	Request #1000-4333	2022-04-04	8	\N	\N
+13	Rquest #1000-4335	2022-03-02	6	\N	\N
+\.
+
+
+--
+-- Data for Name: orders_books; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.orders_books ("orderId", "bookId", "createdAt", "updatedAt") FROM stdin;
+\.
+
+
+--
+-- Data for Name: shelves; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.shelves (id, title, description, "createdAt", "updatedAt") FROM stdin;
+1	Shelf #1	Fantazy, Science Fiction	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+2	Shelf #2	Fairy Tells, Miphology	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+3	Shelf #3	Adventures, Western	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+4	Shelf #4	Biography, Historical	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+5	Shelf #5	Romance, Drama	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+6	Shelf #6	Criminal, Detective	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+7	Shelf #7	Comedy, Education	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+8	Shelf #8	Classic	2023-10-21 12:09:10.31+03	2023-10-21 12:09:10.31+03
+\.
+
+
+--
+-- Name: authors_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.authors_id_seq', 50, true);
+
+
+--
+-- Name: books_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.books_id_seq', 35, true);
+
+
+--
+-- Name: customers_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.customers_id_seq', 33, true);
+
+
+--
+-- Name: genres_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.genres_id_seq', 15, true);
+
+
+--
+-- Name: nationalities_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.nationalities_id_seq', 36, true);
+
+
+--
+-- Name: orders_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.orders_id_seq', 13, true);
+
+
+--
+-- Name: shelves_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.shelves_id_seq', 8, true);
+
+
+--
+-- Name: authors authors_email_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.authors
+    ADD CONSTRAINT authors_email_key UNIQUE (email);
+
+
+--
+-- Name: authors authors_full_name_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.authors
+    ADD CONSTRAINT authors_full_name_key UNIQUE (full_name);
+
+
+--
+-- Name: authors authors_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.authors
+    ADD CONSTRAINT authors_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: books books_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.books
+    ADD CONSTRAINT books_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: books books_title_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.books
+    ADD CONSTRAINT books_title_key UNIQUE (title);
+
+
+--
+-- Name: customers customers_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.customers
+    ADD CONSTRAINT customers_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: genres genres_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.genres
+    ADD CONSTRAINT genres_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: nationalities nationalities_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.nationalities
+    ADD CONSTRAINT nationalities_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: orders orders_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.orders
+    ADD CONSTRAINT orders_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: shelves shelves_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.shelves
+    ADD CONSTRAINT shelves_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: customers uniqe_email; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.customers
+    ADD CONSTRAINT uniqe_email UNIQUE (email);
+
+
+--
+-- Name: authors update_authors_modtime; Type: TRIGGER; Schema: public; Owner: postgres
+--
+
+CREATE TRIGGER update_authors_modtime BEFORE UPDATE ON public.authors FOR EACH ROW EXECUTE FUNCTION public.update_modified_column();
+
+
+--
+-- Name: customers update_authors_modtime; Type: TRIGGER; Schema: public; Owner: postgres
+--
+
+CREATE TRIGGER update_authors_modtime BEFORE UPDATE ON public.customers FOR EACH ROW EXECUTE FUNCTION public.update_modified_column();
+
+
+--
+-- Name: books update_books_modtime; Type: TRIGGER; Schema: public; Owner: postgres
+--
+
+CREATE TRIGGER update_books_modtime BEFORE UPDATE ON public.books FOR EACH ROW EXECUTE FUNCTION public.update_modified_column();
+
+
+--
+-- Name: authors_books authors_books_authorId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.authors_books
+    ADD CONSTRAINT "authors_books_authorId_fkey" FOREIGN KEY ("authorId") REFERENCES public.authors(id);
+
+
+--
+-- Name: authors_books authors_books_bookId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.authors_books
+    ADD CONSTRAINT "authors_books_bookId_fkey" FOREIGN KEY ("bookId") REFERENCES public.books(id);
+
+
+--
+-- Name: authors authors_nationality_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.authors
+    ADD CONSTRAINT authors_nationality_id_fkey FOREIGN KEY (nationality_id) REFERENCES public.nationalities(id);
+
+
+--
+-- Name: books books_genre_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.books
+    ADD CONSTRAINT books_genre_id_fkey FOREIGN KEY (genre_id) REFERENCES public.genres(id);
+
+
+--
+-- Name: books books_shelf_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.books
+    ADD CONSTRAINT books_shelf_id_fkey FOREIGN KEY (shelf_id) REFERENCES public.shelves(id);
+
+
+--
+-- Name: orders_books orders_books_bookId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.orders_books
+    ADD CONSTRAINT "orders_books_bookId_fkey" FOREIGN KEY ("bookId") REFERENCES public.books(id);
+
+
+--
+-- Name: orders_books orders_books_orderId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.orders_books
+    ADD CONSTRAINT "orders_books_orderId_fkey" FOREIGN KEY ("orderId") REFERENCES public.orders(id);
+
+
+--
+-- Name: orders orders_customer_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.orders
+    ADD CONSTRAINT orders_customer_id_fkey FOREIGN KEY (customer_id) REFERENCES public.customers(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
+\unrestrict fLheZZbd1qcGw16ESoWpnsesr9CMPD4zo3qhiyEdMkxtzIe9ssdtGPYfAR8bany
+
